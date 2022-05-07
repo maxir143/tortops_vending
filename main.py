@@ -6,11 +6,18 @@ def main():
     screenViewer = Screenwindow(200)
     layout = [
         [sg.Button('Start', k='OffButton', size=(0, 3), expand_x=True)],
-        [sg.Input('50', k='timeOut', size=(0, 2), expand_x=True), sg.Input('1000', k='area', size=(0, 2), expand_x=True)],
+        [sg.Input('50', k='timeOut', size=(0, 2), expand_x=True), sg.Input('3500', k='area', size=(0, 2), expand_x=True)],
         [sg.Button('Enable Sound', k='snd', size=(0, 2), expand_x=True), sg.Button('Reset trigger', k='trigger', size=(0, 2), expand_x=True)],
-        [sg.Image(filename='', key='image', expand_x=True, expand_y=True)]
+        [sg.Image(filename='', key='image')]
     ]
     window = sg.Window('Tortops Vending', layout, size=(400, 400), resizable=True, keep_on_top=True)
+
+    def time_out(count=0):
+        if count <= 0:
+            return True
+        return count - 1
+
+
     while True:
         event, values = window.read(timeout=round(1000 / 15))
         if event == 'OffButton':

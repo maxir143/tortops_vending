@@ -19,7 +19,7 @@ class Screenwindow:
         self.gamepad = gp.GamePad()
         self.playSound = False
 
-    def run_window(self, area_pixels=800, bounding_box=(0, 0, 100, 100)):
+    def run_window(self, area_pixels=2000, bounding_box=(0, 0, 100, 100)):
         sct_img = ImageGrab.grab(bounding_box)
         sct_img = np.array(sct_img)
         img = sct_img

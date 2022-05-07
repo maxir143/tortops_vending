@@ -149,30 +149,29 @@ class GamePad:
         self.update()
 
 
-def play_sound(gamepad):
+def play_sound(gamepad, update_time=0.1):
     gamepad.connect()
-    gamepad.update(1)
+    gamepad.update(.5)
     gamepad.press_button('BACK')
-    gamepad.update(.5)
+    gamepad.update(update_time)
     gamepad.press_button('X')
-    gamepad.update(.5)
+    gamepad.update(update_time)
     gamepad.release_button('BACK')
     gamepad.release_button('X')
-    gamepad.update(.5)
-
+    gamepad.update(update_time)
     for i in range(4):
         gamepad.press_button('DOWN')
-        gamepad.update(.5)
+        gamepad.update(update_time)
         gamepad.release_button('DOWN')
-        gamepad.update(.5)
+        gamepad.update(update_time)
 
     gamepad.press_button('A')
-    gamepad.update(.5)
+    gamepad.update(update_time)
     gamepad.release_button('A')
     gamepad.update(3)
 
     gamepad.press_button('A')
-    gamepad.update(.5)
+    gamepad.update(update_time)
     gamepad.release_button('A')
-    gamepad.update(.5)
+    gamepad.update(update_time)
     gamepad.disconnect()
