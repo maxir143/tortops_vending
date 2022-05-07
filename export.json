@@ -7,7 +7,7 @@
   },
   {
    "optionDest": "filenames",
-   "value": "D:/Documents/Phyton/Games/tortops_vending/main.py"
+   "value": "C:/Users/prueb/PycharmProjects/tortops_vending/main.py"
   },
   {
    "optionDest": "onefile",
@@ -66,16 +66,16 @@
    "value": false
   },
   {
-   "optionDest": "argv_emulation",
-   "value": false
+   "optionDest": "datas",
+   "value": "C:/Users/prueb/PycharmProjects/tortops_vending/GPEmu.py;."
   },
   {
    "optionDest": "datas",
-   "value": "D:/Documents/Phyton/Games/tortops_vending/GPEmu.py;."
+   "value": "C:/Users/prueb/PycharmProjects/tortops_vending/recorder.py;."
   },
   {
    "optionDest": "datas",
-   "value": "D:/Documents/Phyton/Games/tortops_vending/recorder.py;."
+   "value": "C:/Users/prueb/PycharmProjects/tortops_vending/ViGEmClient.dll;."
   }
  ],
  "nonPyinstallerOptions": {
