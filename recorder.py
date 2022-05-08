@@ -18,6 +18,8 @@ class Screenwindow:
         self.detections = []
         self.gamepad = gp.GamePad()
         self.playSound = False
+        self.is_person = 0
+        self.is_person_trigger = 100
 
     def run_window(self, area_pixels=2000, bounding_box=(0, 0, 100, 100)):
         sct_img = ImageGrab.grab(bounding_box)
@@ -31,13 +33,18 @@ class Screenwindow:
         for cnt in contours:
             area = cv2.contourArea(cnt)
             if area > area_pixels:
-                if self.triggered is False:
+                if self.triggered is False and self.is_person > self.is_person_trigger:
+                    self.is_person = 0
                     self.triggered = True
                     if self.playSound:
                         threading.Thread(target=lambda: gp.play_sound(self.gamepad), daemon=True).start()
                 x, y, w, h = cv2.boundingRect(cnt)
                 cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 1)
                 self.detections.append([x, y, w, h])
+            if self.detections:
+                self.is_person += len(self.detections)
+            else:
+                self.is_person = 0
         self.last_frames = cv2.imencode('.png', cv2.cvtColor(img, cv2.COLOR_RGB2BGR))[1].tobytes()
         return self.last_frames
 
