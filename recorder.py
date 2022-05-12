@@ -6,22 +6,20 @@ import GPEmu as gp
 
 
 class Screenwindow:
-    def __init__(self, timeout_time=30):
+    def __init__(self, timeout_time=20):
         self.is_running = False
         self.windows = None
         self.last_frames = None
         self.object_detector = cv2.createBackgroundSubtractorMOG2()
 
         self.triggered = False
-        self.timeout_time = timeout_time
-        self.timeout = self.timeout_time
+        self.timeout = timeout_time
         self.detections = []
         self.gamepad = gp.GamePad()
         self.playSound = False
         self.is_person = 0
-        self.is_person_trigger = 100
 
-    def run_window(self, area_pixels=2000, bounding_box=(0, 0, 100, 100)):
+    def run_window(self, area_pixels=2000, bounding_box=(0, 0, 100, 100), person_trigger=100):
         sct_img = ImageGrab.grab(bounding_box)
         sct_img = np.array(sct_img)
         img = sct_img
@@ -33,7 +31,7 @@ class Screenwindow:
         for cnt in contours:
             area = cv2.contourArea(cnt)
             if area > area_pixels:
-                if self.triggered is False and self.is_person > self.is_person_trigger:
+                if self.triggered is False and self.is_person > person_trigger:
                     self.is_person = 0
                     self.triggered = True
                     if self.playSound:
@@ -41,7 +39,7 @@ class Screenwindow:
                 x, y, w, h = cv2.boundingRect(cnt)
                 cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 1)
                 self.detections.append([x, y, w, h])
-            if self.detections:
+            if self.detections and self.is_running:
                 self.is_person += len(self.detections)
             else:
                 self.is_person = 0
@@ -51,14 +49,15 @@ class Screenwindow:
     def start(self):
         self.is_running = True
 
-    def stop(self):
+    def stop(self, time_out):
         self.is_running = False
         cv2.destroyAllWindows()
-        self.reset_trigger()
+        self.reset_trigger(time_out)
 
-    def reset_trigger(self):
+    def reset_trigger(self, time_out=20):
         self.triggered = False
-        self.timeout = self.timeout_time
+        self.timeout = time_out
+        self.is_person = 0
 
     def switch_play_sound(self, value: bool = None):
         if self.playSound:

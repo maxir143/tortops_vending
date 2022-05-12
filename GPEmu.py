@@ -58,8 +58,11 @@ class GamePad:
 
     def update(self, wait: float = 0.001):
         if self.gamepad():
-            time.sleep(wait)
-            self.GAMEPAD.update()
+            try:
+                time.sleep(wait)
+                self.GAMEPAD.update()
+            except Exception as e:
+                print(e)
 
     def press_button(self, btn: str, update=True):
         if self.gamepad():
@@ -168,7 +171,7 @@ def play_sound(gamepad, update_time=0.1):
     gamepad.press_button('A')
     gamepad.update(update_time)
     gamepad.release_button('A')
-    gamepad.update(3)
+    gamepad.update(2)
 
     gamepad.press_button('A')
     gamepad.update(update_time)
