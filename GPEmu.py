@@ -161,12 +161,7 @@ def play_sound(gamepad, update_time=0.1):
     gamepad.update(update_time)
     gamepad.release_button('BACK')
     gamepad.release_button('X')
-    gamepad.update(update_time)
-    for i in range(4):
-        gamepad.press_button('DOWN')
-        gamepad.update(update_time)
-        gamepad.release_button('DOWN')
-        gamepad.update(update_time)
+    gamepad.update(.5)
 
     gamepad.press_button('A')
     gamepad.update(update_time)
