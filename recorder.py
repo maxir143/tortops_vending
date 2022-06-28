@@ -1,5 +1,5 @@
 import os
-from datetime import datetime, time
+from datetime import datetime
 
 import numpy as np
 import cv2
@@ -82,7 +82,6 @@ class Recorder:
         self.fps = fps
         self.max_length = max_length
         self.daemon = True
-        print(self.folder)
 
     def set_daemon(self, daemon):
         self.daemon = daemon
@@ -105,9 +104,7 @@ class Recorder:
             screen_size = self.screen_size
             max_length = self.max_length
             fourcc = cv2.VideoWriter_fourcc(*"XVID")
-
             time = datetime.now().strftime("%H-%M-%S")
-
             file_name_format = rf'{self.folder}\{time}.avi'
             out = cv2.VideoWriter(file_name_format, fourcc, fps, screen_size)
             max_recording_time = max_length
