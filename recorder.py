@@ -21,6 +21,7 @@ class Screenwindow:
         self.gamepad = gp.GamePad()
         self.playSound = False
         self.is_person = 0
+        self.audio = 0
 
     def run_window(self, area_pixels=2000, bounding_box=(0, 0, 400, 400), person_trigger=100):
         sct_img = ImageGrab.grab(bounding_box)
@@ -39,7 +40,7 @@ class Screenwindow:
                     self.is_person = 0
                     self.triggered = True
                     if self.playSound:
-                        threading.Thread(target=lambda: gp.play_sound(self.gamepad), daemon=True).start()
+                        threading.Thread(target=lambda: gp.play_sound(self.gamepad, self.audio), daemon=True).start()
                 cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 1)
                 self.detections.append([x, y, w, h])
             if self.detections and self.is_running:
@@ -94,7 +95,7 @@ class Recorder:
     def is_recording(self):
         return self.recording
 
-    def start_recording(self, file_name):
+    def start_recording(self):
         if self.is_recording():
             return
         print('Start Recording')
