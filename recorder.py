@@ -10,16 +10,16 @@ import GPEmu as gp
 
 
 class Screenwindow:
-    def __init__(self, timeout_time=60):
+    def __init__(self, timeout_time=20):
         self.is_running = False
         self.windows = None
         self.last_frames = None
         self.object_detector = cv2.createBackgroundSubtractorMOG2()
         self.triggered = False
-        self.timeout = timeout_time
+        self.timeout = timeout_time * 5
         self.detections = []
         self.gamepad = gp.GamePad()
-        self.playSound = False
+        self.playSound = True
         self.is_person = 0
         self.audio = 0
 
@@ -35,7 +35,7 @@ class Screenwindow:
         for cnt in contours:
             area = cv2.contourArea(cnt)
             x, y, w, h = cv2.boundingRect(cnt)
-            if area > area_pixels and (h / 1.8 > w):
+            if (area > area_pixels) and (area > (area_pixels/2)) and ((h / 1.7) > w) and ((w * 2) > (h/2)):
                 if self.triggered is False and self.is_person > person_trigger:
                     self.is_person = 0
                     self.triggered = True
@@ -50,17 +50,21 @@ class Screenwindow:
         self.last_frames = cv2.imencode('.png', cv2.cvtColor(img, cv2.COLOR_RGB2BGR))[1].tobytes()
         return self.last_frames
 
-    def start(self):
+    def start(self, time_out):
+        self.gamepad = gp.GamePad()
         self.is_running = True
+        cv2.destroyAllWindows()
+        self.reset_trigger(time_out)
 
     def stop(self, time_out):
+        self.gamepad = None
         self.is_running = False
         cv2.destroyAllWindows()
         self.reset_trigger(time_out)
 
-    def reset_trigger(self, time_out=60):
+    def reset_trigger(self, time_out=200):
         self.triggered = False
-        self.timeout = time_out
+        self.timeout = time_out * 5
         self.is_person = 0
 
     def switch_play_sound(self, value: bool = None):

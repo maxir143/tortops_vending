@@ -165,10 +165,7 @@ def play_sound(gamepad, audio_id=0, update_time=0.1):
     gamepad.update(.5)
 
     directions = ['RIGHT', 'RIGHT', 'RIGHT', 'RIGHT', 'DOWN', 'LEFT', 'LEFT', 'LEFT', 'LEFT', 'DOWN']
-    direction = directions[0]
-    print(audio_id)
     for index in range(audio_id):
-        print(index % len(directions))
         direction = directions[index % len(directions)]
         gamepad.press_button(direction)
         gamepad.update(update_time)
