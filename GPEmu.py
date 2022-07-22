@@ -1,3 +1,4 @@
+from random import randint
 import vgamepad as vg
 import time
 
@@ -153,6 +154,13 @@ class GamePad:
 
 
 def play_sound(gamepad, audio_id=0, update_time=0.1):
+    if audio_id == 'customs':
+        custom_ids = [0,1,2,10,11,12,13]
+        random_id = randint(0, 6)
+        audio_id = custom_ids[random_id]
+    else:
+        audio_id = int(audio_id)
+
     # open sound menu
     gamepad.connect()
     gamepad.update(.5)

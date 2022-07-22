@@ -2,18 +2,18 @@ from recorder import Screenwindow
 from recorder import Recorder
 import PySimpleGUI as sg
 
-version = 0.5
+version = 0.6
 
 
 def main():
-    TIMEOUT = 20
+    TIMEOUT = 10
     screenViewer = Screenwindow(TIMEOUT)
     screenRecorder = Recorder()
-    audios = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']
+    audios = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23','customs']
     layout = [
         [sg.Button('Start', k='startBtn', size=(0, 3), expand_x=True)],
         [sg.Text('Time out:'), sg.Slider((TIMEOUT, 100), k='timeOut', size=(0, 10), orientation='h', expand_x=True), sg.Text('Sensitivity:'), sg.Slider((100, 2000), 800, k='area', size=(0, 10), orientation='h', expand_x=True)],
-        [sg.Text('Person trigger:'), sg.Slider((50, 500), 75, k='person', size=(0, 10), orientation='h', expand_x=True), sg.Text('Sound Nº'), sg.Combo(audios, default_value=audios[20], s=(10, 0), k='audio_index')],
+        [sg.Text('Person trigger:'), sg.Slider((50, 500), 75, k='person', size=(0, 10), orientation='h', expand_x=True), sg.Text('Sound Nº'), sg.Combo(audios,readonly = True, default_value=audios[0], s=(10, 0), k='audio_index')],
         [sg.Button('Play Audio', k='snd',button_color='green', size=(0, 2), expand_x=True), sg.Button('Reset trigger', k='trigger', size=(0, 2), expand_x=True)],
         [sg.Image(filename='', key='image')]
     ]
@@ -56,7 +56,7 @@ def main():
             else:
                 if screenRecorder.is_recording():
                     screenRecorder.stop_recording()
-        screenViewer.audio = int(values['audio_index'])
+        screenViewer.audio = values['audio_index']
         x1, y1 = window.current_location()
         x2, y2 = window.current_location()
         x2_offset, y2_offset = window.current_size_accurate()
